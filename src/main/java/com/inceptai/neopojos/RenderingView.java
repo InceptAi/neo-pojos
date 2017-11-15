@@ -2,8 +2,8 @@ package com.inceptai.neopojos;
 
 @SuppressWarnings("unused")
 public class RenderingView {
-    private long parentViewId;
-    private long flatViewId;
+    private String parentViewId;
+    private String flatViewId;
     private String packageName;
     private String className;
     private String text;
@@ -82,11 +82,11 @@ public class RenderingView {
         this.endItemIndex = endItemIndex;
     }
 
-    public long getParentViewId() {
+    public String getParentViewId() {
         return parentViewId;
     }
 
-    public long getFlatViewId() {
+    public String getFlatViewId() {
         return flatViewId;
     }
 
@@ -142,11 +142,11 @@ public class RenderingView {
         return isCheckable;
     }
 
-    public void setParentViewId(long parentViewId) {
+    public void setParentViewId(String parentViewId) {
         this.parentViewId = parentViewId;
     }
 
-    public void setFlatViewId(long flatViewId) {
+    public void setFlatViewId(String flatViewId) {
         this.flatViewId = flatViewId;
     }
 
@@ -206,11 +206,12 @@ public class RenderingView {
     public RenderingView(){}
 
     //Actual constructor
-    public RenderingView(long parentViewId,  long flatViewId, String packageName,
+    public RenderingView(String parentViewId,  String flatViewId, String packageName,
                          String className, String contentDescription, String text,
                          String viewIdResourceName, int leftX, int rightX, int topY,
                          int bottomY, boolean isParentOfClickableView, boolean isChecked,
-                         boolean isClickable, boolean isCheckable) {
+                         boolean isClickable, boolean isCheckable, boolean isScrollable,
+                         boolean isSelected) {
         this.flatViewId = flatViewId;
         this.viewIdResourceName = viewIdResourceName;
         this.className = className;
@@ -226,6 +227,54 @@ public class RenderingView {
         this.leftX = leftX;
         this.rightX = rightX;
         this.isParentOfClickableView = isParentOfClickableView;
+        this.isScrollable = isScrollable;
+        this.isSelected = isSelected;
+    }
+
+    public RenderingView(String className,
+                         String packageName,
+                         String contentDescription,
+                         String text) {
+        this.viewIdResourceName = Utils.EMPTY_STRING;
+        this.className = className;
+        this.packageName = packageName;
+        this.text = text;
+        this.contentDescription = contentDescription;
+        this.currentItemIndex = -1;
+        this.endItemIndex = -1;
+        this.startItemIndex = -1;
+        this.totalItems = 0;
+    }
+
+    public RenderingView(String className,
+                         String packageName,
+                         String contentDescription,
+                         String text,
+                         boolean isClickable,
+                         boolean isCheckable,
+                         boolean isScrollable,
+                         boolean isChecked,
+                         boolean isEnabled,
+                         boolean isSelected,
+                         int totalItems,
+                         int currentItemIndex,
+                         int startItemIndex,
+                         int endItemIndex) {
+        this.viewIdResourceName = Utils.EMPTY_STRING;
+        this.className = className;
+        this.packageName = packageName;
+        this.text = text;
+        this.contentDescription = contentDescription;
+        this.isClickable = isClickable;
+        this.isCheckable = isCheckable;
+        this.isScrollable = isScrollable;
+        this.isChecked = isChecked;
+        this.isEnabled = isEnabled;
+        this.isSelected = isSelected;
+        this.totalItems = totalItems;
+        this.currentItemIndex = currentItemIndex;
+        this.startItemIndex = startItemIndex;
+        this.endItemIndex = endItemIndex;
     }
 
     public String getOverallText() {

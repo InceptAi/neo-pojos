@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="neo-pojos:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/neo_pojos_jar</output-path>
+    <root id="archive" name="neo-pojos.jar">
+      <element id="module-output" name="neo-pojos" />
+    </root>
+  </artifact>
+</component>

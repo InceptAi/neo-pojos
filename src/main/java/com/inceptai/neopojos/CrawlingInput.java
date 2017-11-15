@@ -19,19 +19,22 @@ public class CrawlingInput {
     private String lastScreenPackageName = Utils.EMPTY_STRING;
     private String rootPackageName = Utils.EMPTY_STRING;
     private String lastUIAction = Utils.EMPTY_STRING;
+    private String appVersion = Utils.EMPTY_STRING;
+    private String versionCode = Utils.EMPTY_STRING;
     private int rootHeight;
     private int rootWidth;
     private RenderingView lastViewClicked;
-    private HashMap<String, String> deviceInfo = new HashMap<>();
-    private HashMap<Long, RenderingView> viewMap = new HashMap<>() ;
+    private DeviceInfo deviceInfo = new DeviceInfo();
+    private HashMap<String, RenderingView> viewMap = new HashMap<>() ;
 
     public CrawlingInput() {}
 
     public CrawlingInput(int numViews, int rootHeight, int rootWidth, String rootTitle,
                          String lastScreenTitle, String lastScreenPackageName,
                          RenderingView lastViewClicked, String lastUIAction,
-                         String rootPackageName, HashMap<String, String> deviceInfo,
-                         HashMap<Long, RenderingView> viewMap) {
+                         String rootPackageName, DeviceInfo deviceInfo,
+                         HashMap<String, RenderingView> viewMap, String appVersion,
+                         String versionCode) {
         this.numViews = numViews;
         this.rootHeight = rootHeight;
         this.rootWidth = rootWidth;
@@ -43,6 +46,39 @@ public class CrawlingInput {
         this.rootPackageName = rootPackageName;
         this.deviceInfo = deviceInfo;
         this.viewMap = viewMap;
+        this.appVersion = appVersion;
+        this.versionCode = versionCode;
+    }
+
+    public CrawlingInput(int rootWidth, int rootHeight, DeviceInfo deviceInfo) {
+        numViews = 0;
+        this.rootWidth = rootWidth;
+        this.rootHeight = rootHeight;
+        this.rootTitle = Utils.EMPTY_STRING;
+        this.lastScreenTitle = Utils.EMPTY_STRING;
+        this.lastViewClicked = null;
+        this.lastUIAction = Utils.EMPTY_STRING;
+        this.lastScreenPackageName = Utils.EMPTY_STRING;
+        this.rootPackageName = Utils.EMPTY_STRING;
+        this.deviceInfo = deviceInfo;
+        this.lastScreenType = UNDEFINED_SCREEN_MODE;
+        this.rootSubTitle = Utils.EMPTY_STRING;
+        this.lastScreenSubTitle = Utils.EMPTY_STRING;
+        this.appVersion = Utils.EMPTY_STRING;
+        this.versionCode = Utils.EMPTY_STRING;
+    }
+
+    public void addView(String viewId, RenderingView renderingView) {
+        viewMap.put(viewId, renderingView);
+        numViews ++;
+    }
+
+    public String getAppVersion() {
+        return appVersion;
+    }
+
+    public void setAppVersion(String appVersion) {
+        this.appVersion = appVersion;
     }
 
     public String getRootSubTitle() {
@@ -81,7 +117,7 @@ public class CrawlingInput {
         return rootWidth;
     }
 
-    public HashMap<Long, RenderingView> getViewMap() {
+    public HashMap<String, RenderingView> getViewMap() {
         return viewMap;
     }
 
@@ -93,11 +129,11 @@ public class CrawlingInput {
         return viewMap.isEmpty();
     }
 
-    public long getParentViewId(long viewId) {
+    public String getParentViewId(String viewId) {
         if (viewMap.get(viewId) != null) {
             return viewMap.get(viewId).getParentViewId();
         }
-        return 0;
+        return Utils.EMPTY_STRING;
     }
 
     public String getLastScreenPackageName() {
@@ -116,12 +152,76 @@ public class CrawlingInput {
         return Utils.sanitizeText(lastScreenTitle);
     }
 
-    public HashMap<String, String> getDeviceInfo() {
+    public DeviceInfo getDeviceInfo() {
         return deviceInfo;
     }
 
-    public void setDeviceInfo(HashMap<String, String> deviceInfo) {
+    public void setDeviceInfo(DeviceInfo deviceInfo) {
         this.deviceInfo = deviceInfo;
+    }
+
+    public void setNumViews(int numViews) {
+        this.numViews = numViews;
+    }
+
+    public void setRootSubTitle(String rootSubTitle) {
+        this.rootSubTitle = rootSubTitle;
+    }
+
+    public void setLastScreenSubTitle(String lastScreenSubTitle) {
+        this.lastScreenSubTitle = lastScreenSubTitle;
+    }
+
+    public void setCurrentScreenType(String currentScreenType) {
+        this.currentScreenType = currentScreenType;
+    }
+
+    public void setLastScreenType(String lastScreenType) {
+        this.lastScreenType = lastScreenType;
+    }
+
+    public void setRootTitle(String rootTitle) {
+        this.rootTitle = rootTitle;
+    }
+
+    public void setLastScreenTitle(String lastScreenTitle) {
+        this.lastScreenTitle = lastScreenTitle;
+    }
+
+    public void setLastScreenPackageName(String lastScreenPackageName) {
+        this.lastScreenPackageName = lastScreenPackageName;
+    }
+
+    public void setRootPackageName(String rootPackageName) {
+        this.rootPackageName = rootPackageName;
+    }
+
+    public void setLastUIAction(String lastUIAction) {
+        this.lastUIAction = lastUIAction;
+    }
+
+    public void setRootHeight(int rootHeight) {
+        this.rootHeight = rootHeight;
+    }
+
+    public void setRootWidth(int rootWidth) {
+        this.rootWidth = rootWidth;
+    }
+
+    public void setLastViewClicked(RenderingView lastViewClicked) {
+        this.lastViewClicked = lastViewClicked;
+    }
+
+    public String getVersionCode() {
+        return versionCode;
+    }
+
+    public void setVersionCode(String versionCode) {
+        this.versionCode = versionCode;
+    }
+
+    public void setViewMap(HashMap<String, RenderingView> viewMap) {
+        this.viewMap = viewMap;
     }
 
     @Override
